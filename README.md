@@ -6,86 +6,126 @@
 obj-ScrollViews
 ===============
 
-### Goals 
+## Goals 
   
   - Learn about ScrollViews
   - Use ScrollViews with Autolayout 
   - Incorporate ScrollViews into UITableViewCells 
 
-###UIScrollView
+##UIScrollView
 
-UIScrollViews are key components of many different UIKit Classes.  They are the unsung heroes of UITableView, UIPageView, UITextView, UICollectionView, and many, many more.  Today, my friends, we liberate the scroll view from the shackles of servitude, and acknowledge her prowess outside the long shadow of her overlords.  
+UIScrollViews are key components of many different UIKit Classes.  They are the unsung heroes of UITableView, UIPageView, UITextView, UICollectionView, and many, many more.  Today, my friends, we liberate the ScrollView from the shackles of servitude, and pay homage to the thankless job of scrolling.   
 
-**We'll test drive the scroll view on three different use cases.** 
+###Autolayout and ScrollViews
 
--  A scroll view to display a horizontal collection of photos (*with paging*) 
--  A scroll view embedded in a UITableViewCell to allow horizontal scrolling (*with paging*) 
--  Embedding form data in a scroll view to scroll content when keyboard appears and disappears     
+Quite frankly, Autolayout wreaks havoc on ScrollViews.  So much so, that if you have Autolayout enabled, and you add a ScrollView to your project, it's very likely that nothing will happen.  No scrolling, no paging, nada.  
 
-###Cast of Characters 
+But all is not lost! Apple has a **[somewhat useful little article](https://developer.apple.com/library/ios/technotes/tn2154/_index.html)** about working with ScrollViews in Autolayout-enabled projects.  I highly recommend at least scanning this doc before starting this lab.  We'll be using the "Mixed Approach", which basically uses Autolayout to position the ScrollView itself and the internal devices of the ScrollView to layout its' content.    
 
-There are a few properties on Scroll Views that you'll need to be familiar with in order to use them effectively.  
+###Pure Autolayout Approach 
 
-- **`@property(nonatomic) CGSize contentSize`** - The size of the content view.
-- **`@property(nonatomic) CGPoint contentOffset`** -  The point at which the origin of the content view is offset from the origin of the scroll view. The default value is `CGPointZero`.
-- **`@property(nonatomic, getter=isPagingEnabled) BOOL pagingEnabled`** - A Boolean value that determines whether paging is enabled for the scroll view. If the value of this property is YES, the scroll view stops on multiples of the scroll views' bounds when the user scrolls. The default value is NO.
+Apple offers this little snippet 
 
-##Autolayout and ScrollViews
 
-Quite frankly, Autolayout wreaks havoc on scroll views.  So much so that if you have Autolayout enabled, and you add a ScrollView to your project it's very likely that nothing will happen.  No scrolling, no paging, nada.  
+> To use the pure autolayout approach do the following:
 
-But all is not lost! Apple has a **[somewhat useful little article](https://developer.apple.com/library/ios/technotes/tn2154/_index.html)** about working with ScrollViews in Autolayout-enabled projects.  I highly recommend at least scanning this doc before starting this lab.  We'll be using the "Mixed Approach", which basically uses Autolayout to position the ScrollView itself and the internal devices of the scroll view to layout its' content.    
+> - Set translatesAutoresizingMaskIntoConstraints to NO on all views involved.
+> - Position and size your ScrollView with constraints external to the ScrollView.
+> - Use constraints to lay out the subviews within the ScrollView, being sure that the constraints tie to all four edges of the ScrollView and do not rely on the ScrollView to get their size.
 
-##Mixed Approach
 
-Apple offers this little snippet on the mixed Autolayout / ScrollView approach.  
+Getting autolayout to work in the storyboard is the darkest form of magic.  But fear not, we can use the guidelines that Apple has provided to build an Auto-Layout enabled ScrollView without a single line of code.  Follow this formula and you're content will be scrolling in no time. Perhaps we can even make sense of what's happening when we're done.  
 
->Position and size your scroll view with constraints external to the scroll view—that is, the translatesAutoresizingMaskIntoConstraints property is set to NO.
->Create a plain UIView content view for your scroll view that will be the size you want your content to have. Make it a subview of the scroll view but let it continue to translate the autoresizing mask into constraints:
+###Configuring the views on the StoryBoard 
 
-##Autolayout Approach 
-
-Getting autolayout to work in the storyboard is the darkest form of magic.  But fear not.  Follow this formula and you're content will be scrolling in no time. Perhaps we can even make sense of what's happening when we're done.  
-
-##Configuring the views on the StoryBoard 
-- Drag a scroll view onto the view controller and make it exactly fill the bounds rect of the view (full screen).
-- Drag a view and drop it over top of the scroll view making sure it is both the same dimensions and in the same position as the scroll view.  This will be our content view. 
-- Expand the content view on the Y axis to make it taller than the scroll view.  This is most easily executed from the size inspector by simply increasing the height of the view to 600. 
+- Drag a ScrollView onto the view controller and make it exactly fill the bounds rect of the view (full screen).
+- Drag a view and drop it over top of the ScrollView making sure it is both the same dimensions and in the same position as the ScrollView.  This will be our content view. 
+- Expand the content view on the Y axis to make it taller than the ScrollView.  This is most easily executed from the size inspector by simply increasing the height of the view to 600. 
 - Add a few buttons, one at the top, one in the middle and one at the bottom of the view (you may have to do some awkward maneuvering of the content view to pull this off, just make sure you move it back to it's origin of 0,0 when you're done)
 
-##Laying out the views
-- Select the scroll view from the document outline and select the 'pin' icon to add new constraints. (It looks kind of like this |-|-|  ) 
+###Laying out the views
+- Select the ScrollView from the document outline and select the 'pin' icon to add new constraints. (It looks kind of like this |-|-|  ) 
 - Select each of the orange 'pin' icons around the bounding box (spacing to nearest neighbor) and ensure all of the spacing values are set to 0.  This operation should add 4 constraints, as shown at the bottom of the window.  
 - Select 'add 4 constraints'. 
 - Next, select the content view and add 0 pt spacing around each edge of its' bounds rect.  Also select the height constraint.  The height value should be greater than the height of the iPhone screen. 
-- This time, select both the content view and the scroll view -> add new constraints and select equal widths.  
-##What did we just do? 
+- This time, select both the content view and the ScrollView -> add new constraints and select equal widths.  
 
-OK, let's think about this.  There are a few things that have to go just right to allow the scroll view to determine its' scrollable content size.
+###What did we just do? 
 
-- The Scroll view - The scroll view must have a concrete layout.  ie. It must know how to derive its width, height, and x/y position.  We did this by constraining the scroll view to it's superview's (the default view) leading, trailing, top and bottom edges.  
-- The content view - 
-The content view must have bounds that expand beyond that of the scroll view (in our case we made the content expand down in the y axis) and have constraints to the scroll view on all 4 edges.  
+OK, let's think about this.  There are a few things that have to go just right to allow the ScrollView to determine its' scrollable content size.
 
-This all may still not make an incredible amount of sense, but if you can reproduce this template, you know have a very powerful, flexible layout.  At this point, you can embed whatever UI elements you'd like into that content view and have a fully Auto-Layout compatible scroll view.  You can even make an outlet from the content view to your ViewController Subclass code and do all of your layout and/or subview creation in code.   
+- **The ScrollView** - The ScrollView must have a concrete layout.  ie. It must know how to derive its width, height, and x/y position.  We did this by constraining the ScrollView to it's superview's (the default view) leading, trailing, top and bottom edges.  
+- **The content view** - 
+The content view must have bounds that expand beyond that of the ScrollView (in our case we made the content expand down in the y axis, but we could have just as easily extended on the x axis) and have constraints to the ScrollView on all 4 edges.  
 
-### Instructions 
+This all may still not make an incredible amount of sense, but if you can reproduce this template, you now have a very powerful, flexible layout.  At this point, you can embed whatever UI elements you'd like into that content view and have a fully Auto-Layout compatible ScrollView.  You can even make an outlet from the content view to your ViewController Subclass code and do all of your layout and/or subview creation in code.   
 
-  - 
-  - 
-  - 
+##Cast of Characters 
+
+There are a few properties on ScrollViews that you'll need to be familiar with in order to use them effectively.  
+
+- **`@property(nonatomic) CGSize contentSize`** - The size of the content view.
+- **`@property(nonatomic) CGPoint contentOffset`** -  The point at which the origin of the content view is offset from the origin of the ScrollView. The default value is `CGPointZero`.
+- **`@property(nonatomic, getter=isPagingEnabled) BOOL pagingEnabled`** - A Boolean value that determines whether paging is enabled for the ScrollView. If the value of this property is YES, the ScrollView stops on multiples of the ScrollViews' bounds when the user scrolls. The default value is NO.
+
+##Lab 
+
+**We'll test drive the ScrollView on two different use cases.** 
+
+-  A ScrollView to display a horizontal collection of photos (*with paging*) 
 
 
-### Extra Credit
+## Instructions 
 
+  - Create a ScrollView that has 5 pictures on it.  The user should be able to scroll horizontally through the pictures and be presented one picture per page.  Do this with a ScrollView **not** a UIPageViewController 
+  - Create a custom UITableViewCell.  Embed your paging ScrollView from part 1 into that tableViewCell.  You should make it such that you can add load images into your custom cell via the TableView DataSource.  
 
-### Links
+## Extra Credit
+
+In a separate View Controller, create a ScrollView that intercepts the action of the keyboard being presented or dismissed, and scrolls some form UI from the center of the screen to the top of the screen when present and back to the middle when dismissed.  
+
+Here is how you find out if the keyboard has appeared or disappeared 
+
+```objc
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)keyBoardWillShow:(NSNotification *)notification
+{
+	[UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue]]; //This gives you the duration of the keyboard appearance animation 
+    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]]; // This sets the curve of your animations to match that of the keyboard animation.  (It's not linear animation)
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    
+    // Here is where you change something to make it animate.  Sadly I haven't been able to port this hack over to block based animation.. yet 
+    
+    [UIView commitAnimations];
+
+}
+```
+
+## Links
 
 - **Auto-Layout with ScrollViews** - https://developer.apple.com/library/ios/technotes/tn2154/_index.html
-- **Demo of Laying out Scroll View in Storyboard** - https://www.youtube.com/watch?v=4oCWxHLBQ-A
+- **Demo of Laying out ScrollView in Storyboard** - https://www.youtube.com/watch?v=4oCWxHLBQ-A
 
-### Pro Tip 
+### Tip of the day 
 
 - Create a new ViewController, select it, show the 'Attributes Inspector'(the badge thingy?), and select freeform.  (This allows your ViewController to morph to sizes larger than the screen, which is great for laying out Scrollable content)
 - Select your view controller's default view, open the size inspector (the ruler) and set the height to something larger than the point size of a real iPhone screen, say 700.  
+
+
+
 

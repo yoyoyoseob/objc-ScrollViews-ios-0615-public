@@ -112,7 +112,6 @@ Here is how you find out if the keyboard has appeared or disappeared
 
 }
 ```
-
 ## Links
 
 - **Auto-Layout with ScrollViews** - https://developer.apple.com/library/ios/technotes/tn2154/_index.html

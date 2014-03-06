@@ -3,7 +3,7 @@
   languages: objc
 ---
 
-obj-ScrollViews
+objc-ScrollViews
 ===============
 
 ## Goals 

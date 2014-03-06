@@ -36,6 +36,8 @@ Apple offers this little snippet
 
 Getting autolayout to work in the storyboard is the darkest form of magic.  But fear not, we can use the guidelines that Apple has provided to build an Auto-Layout enabled ScrollView without a single line of code.  Follow this formula and you're content will be scrolling in no time. Perhaps we can even make sense of what's happening when we're done.  
 
+##Tutorial
+
 ###Configuring the views on the StoryBoard 
 
 - Drag a ScrollView onto the view controller and make it exactly fill the bounds rect of the view (full screen).

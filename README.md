@@ -117,7 +117,7 @@ Here is how you find out if the keyboard has appeared or disappeared
 - **Auto-Layout with ScrollViews** - https://developer.apple.com/library/ios/technotes/tn2154/_index.html
 - **Demo of Laying out ScrollView in Storyboard** - https://www.youtube.com/watch?v=4oCWxHLBQ-A
 
-### Tip of the day 
+## Tip of the day 
 
 - Create a new ViewController, select it, show the 'Attributes Inspector'(the badge thingy?), and select freeform.  (This allows your ViewController to morph to sizes larger than the screen, which is great for laying out Scrollable content)
 - Select your view controller's default view, open the size inspector (the ruler) and set the height to something larger than the point size of a real iPhone screen, say 700.  

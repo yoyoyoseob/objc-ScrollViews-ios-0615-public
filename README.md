@@ -70,12 +70,7 @@ There are a few properties on ScrollViews that you'll need to be familiar with i
 - **`@property(nonatomic) CGPoint contentOffset`** -  The point at which the origin of the content view is offset from the origin of the ScrollView. The default value is `CGPointZero`.
 - **`@property(nonatomic, getter=isPagingEnabled) BOOL pagingEnabled`** - A Boolean value that determines whether paging is enabled for the ScrollView. If the value of this property is YES, the ScrollView stops on multiples of the ScrollViews' bounds when the user scrolls. The default value is NO.
 
-##Lab 
-
-**We'll test drive the ScrollView on two different use cases.** 
-
--  A ScrollView to display a horizontal collection of photos (*with paging*) 
-
+###Lab 
 
 ## Instructions 
 

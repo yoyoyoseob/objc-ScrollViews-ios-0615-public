@@ -33,8 +33,10 @@ Apple offers this little snippet
 > - Position and size your ScrollView with constraints external to the ScrollView.
 > - Use constraints to lay out the subviews within the ScrollView, being sure that the constraints tie to all four edges of the ScrollView and do not rely on the ScrollView to get their size.
 
-
 Getting autolayout to work in the storyboard is the darkest form of magic.  But fear not, we can use the guidelines that Apple has provided to build an Auto-Layout enabled ScrollView without a single line of code.  Follow this formula and you're content will be scrolling in no time. Perhaps we can even make sense of what's happening when we're done.  
+
+###Paging 
+We're all familiar with paging in scroll views.  Paging allows you to autoscroll your view with a certain offset when the user pans in a given direction.  For example, a group of 4 pictures can be laid out horizontally such that there are 4 different pages, with each page enclosing an image.  Instead of fluid scrolling, your view will snap to the next image after you've scrolled a certain distance.  For the sake of brevity, you should lean on [the documentation](https://developer.apple.com/library/ios/documentation/windowsviews/conceptual/UIScrollView_pg/ScrollViewPagingMode/ScrollViewPagingMode.html) for configuring your pages.  But the two key properties you're concerned with in regards to paging are the ScrollView's contentSize and pagingMode.  
 
 ##Tutorial
 
@@ -116,12 +118,9 @@ Here is how you find out if the keyboard has appeared or disappeared
 
 - **Auto-Layout with ScrollViews** - https://developer.apple.com/library/ios/technotes/tn2154/_index.html
 - **Demo of Laying out ScrollView in Storyboard** - https://www.youtube.com/watch?v=4oCWxHLBQ-A
+- **Scrolling Using Paging Mode** - https://developer.apple.com/library/ios/documentation/windowsviews/conceptual/UIScrollView_pg/ScrollViewPagingMode/ScrollViewPagingMode.html
 
 ## Tip of the day 
 
 - Create a new ViewController, select it, show the 'Attributes Inspector'(the badge thingy?), and select freeform.  (This allows your ViewController to morph to sizes larger than the screen, which is great for laying out Scrollable content)
 - Select your view controller's default view, open the size inspector (the ruler) and set the height to something larger than the point size of a real iPhone screen, say 700.  
-
-
-
-

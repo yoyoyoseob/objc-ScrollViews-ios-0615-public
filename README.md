@@ -100,18 +100,18 @@ Here is how you find out if the keyboard has appeared or disappeared
                                                object:nil];
 }
 
+
 - (void)keyBoardWillShow:(NSNotification *)notification
 {
-	[UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue]]; //This gives you the duration of the keyboard appearance animation 
-    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]]; // This sets the curve of your animations to match that of the keyboard animation.  (It's not linear animation)
-    [UIView setAnimationBeginsFromCurrentState:YES];
+    // grab some values from the notification
+    double keyboardAnimationDuration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    NSInteger keyboardAnimationCurve = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
     
-    
-    // Here is where you change something to make it animate.  Sadly I haven't been able to port this hack over to block based animation.. yet 
-    
-    [UIView commitAnimations];
-
+    [UIView animateKeyframesWithDuration: keyboardAnimationDuration delay:0.0 options:keyboardAnimationCurve animations:^{
+        
+        // Here is where you change something to make it animate!
+        
+    } completion:nil];
 }
 ```
 ## Links
